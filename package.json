@@ -1,0 +1,23 @@
+{
+  "name": "employee-mgt-system-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/punxara/employee-mgt-system-api.git"
+  },
+  "author": "Punsara Bandara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/punxara/employee-mgt-system-api/issues"
+  },
+  "homepage": "https://github.com/punxara/employee-mgt-system-api#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1"
+  }
+}
