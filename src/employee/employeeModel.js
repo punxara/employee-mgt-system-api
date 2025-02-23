@@ -26,6 +26,10 @@ const employeeSchema = new Schema({
     isActive: {
         type: Boolean,
         required: true
+    },
+    imageUrl: {
+        type: String,
+        required: false
     }
 })
 

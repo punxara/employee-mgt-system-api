@@ -15,7 +15,8 @@ module.exports.createEmployee = (payload) => {
         password: encryptor.encrypt(payload.password),
         position: payload.position,
         department: payload.department,
-        isActive: false
+        isActive: false,
+        imageUrl: payload.imageUrl
     });
     return employee.save()
         .then(result => result)
