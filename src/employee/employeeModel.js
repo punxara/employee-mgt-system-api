@@ -8,7 +8,8 @@ const employeeSchema = new Schema({
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -33,4 +34,15 @@ const employeeSchema = new Schema({
     }
 })
 
+
 module.exports = mongoose.model('Employee', employeeSchema)
+
+// employeeSchema.statics.authenticateUser = async (payload) => {
+//     const employee = await mongoose.model('Employee', employeeSchema).findOne(payload.name);
+//     const isValid = await bcrypt.compare(payload.password, employee.password);
+//     if (isValid){
+//         return employee;
+//     } else {
+//         throw new Error('Invalid password.');
+//     }
+// }

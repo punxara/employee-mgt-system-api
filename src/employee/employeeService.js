@@ -1,6 +1,5 @@
 const employeeSchema = require('./employeeModel');
-const key = 'real secret keys should be long and random';
-const encryptor = require('simple-encryptor')(key);
+const bcrypt = require('bcrypt');
 
 module.exports.getAllEmployees = () => {
     return employeeSchema.find({}).populate('department')
@@ -8,11 +7,11 @@ module.exports.getAllEmployees = () => {
         .catch(error => { throw new Error(error.message); });
 };
 
-module.exports.createEmployee = (payload) => {
+module.exports.createEmployee = async (payload) => {
     let employee = new employeeSchema({
         name: payload.name,
         username: payload.username,
-        password: encryptor.encrypt(payload.password),
+        password: await bcrypt.hash(payload.password, 10),
         position: payload.position,
         department: payload.department,
         isActive: false,
@@ -20,7 +19,9 @@ module.exports.createEmployee = (payload) => {
     });
     return employee.save()
         .then(result => result)
-        .catch(error => { throw new Error(error.message); });
+        .catch(error => {
+            throw new Error(error.message);
+        });
 };
 
 module.exports.updateEmployee = (id, payload) => {
