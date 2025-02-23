@@ -24,4 +24,4 @@ const routes = require('./routes/routes');
 server.use(routes);
 
 const cors = require('cors')
-server.use(cors())
+server.use(cors());
