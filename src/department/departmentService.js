@@ -18,6 +18,7 @@ module.exports.getAllDepartments = () => {
 module.exports.createDepartment = (payload) => {
     let department = new departmentSchema({
         name: payload.name,
+        description: payload.description,
     });
     return department.save()
         .then(result => result)

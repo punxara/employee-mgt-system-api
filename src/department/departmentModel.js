@@ -6,6 +6,10 @@ const departmentSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    description: {
+        type: String,
+        required: false,
     }
 });
 
