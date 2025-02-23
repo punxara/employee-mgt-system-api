@@ -1,3 +1,4 @@
+// --------------------------------------------------EXPRESS----------------------------------------------------------
 const express = require('express');
 const server = express();
 server.use(express.json());
@@ -9,6 +10,7 @@ server.listen(8000, function check(error){
     }
 });
 
+// --------------------------------------------------MONGOOSE----------------------------------------------------------
 const mongoose = require('mongoose');
 const connectDB = async () => {
     try {
@@ -20,8 +22,33 @@ const connectDB = async () => {
 };
 connectDB();
 
+// --------------------------------------------------ROUTES----------------------------------------------------------
 const routes = require('./routes/routes');
 server.use(routes);
 
+// --------------------------------------------------CORS----------------------------------------------------------
 const cors = require('cors')
 server.use(cors());
+
+// --------------------------------------------------SWAGGER----------------------------------------------------------
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Management System API',
+            version: '1.0.0',
+            description: 'API documentation for the Management System',
+        },
+        servers: [
+            {
+                url: 'http://localhost:8000',
+            },
+        ],
+    },
+    apis: ['./routes/routes.js'], // Path to the API routes
+};
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+server.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
