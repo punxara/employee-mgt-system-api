@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
-const employee = new schema({
+const employeeSchema = new schema({
     name: {
         type: String,
         required: true
@@ -24,4 +24,4 @@ const employee = new schema({
     }
 })
 
-module.exports = mongoose.model('employees', employee)
+module.exports = mongoose.model('employees', employeeSchema)

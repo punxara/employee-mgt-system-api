@@ -1,8 +1,10 @@
-const employee = require('./employeeModel')
+const employeeSchema = require('./employeeModel');
+const key = 'real secret keys should be long and random';
+const encryptor = require('simple-encryptor')(key);
 
-module.exports.getDataFromDbService = () => {
+module.exports.getAllEmployees = () => {
     return new Promise(function checkUrl(resolve, reject) {
-        employee.find({}, function returnData(error, result) {
+        employeeSchema.find({}, function returnData(error, result) {
             if (error) {
                 reject(false);
             } else {
@@ -11,3 +13,18 @@ module.exports.getDataFromDbService = () => {
         });
     });
 }
+
+
+module.exports.createEmployee = (employeePayload) => {
+    let employee = new employeeSchema({
+        name: employeePayload.name,
+        username: employeePayload.username,
+        password: encryptor.encrypt(employeePayload.password),
+        position: employeePayload.position,
+        department: employeePayload.department
+    });
+
+    return employee.save()
+        .then(result => result) // ✅ Resolves if successful
+        .catch(error => { throw new Error(error.message); }); // ✅ Rejects if there's an error
+};
