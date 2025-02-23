@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const employeeSchema = new schema({
+const employeeSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -19,7 +19,8 @@ const employeeSchema = new schema({
         required: true
     },
     department: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Department',
         required: true
     },
     isActive: {
@@ -28,4 +29,4 @@ const employeeSchema = new schema({
     }
 })
 
-module.exports = mongoose.model('employees', employeeSchema)
+module.exports = mongoose.model('Employee', employeeSchema)

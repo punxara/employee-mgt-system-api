@@ -3,18 +3,18 @@ const key = 'real secret keys should be long and random';
 const encryptor = require('simple-encryptor')(key);
 
 module.exports.getAllEmployees = () => {
-    return employeeSchema.find({})
+    return employeeSchema.find({}).populate('department')
         .then(result => result)
         .catch(error => { throw new Error(error.message); });
 };
 
-module.exports.createEmployee = (employeePayload) => {
+module.exports.createEmployee = (payload) => {
     let employee = new employeeSchema({
-        name: employeePayload.name,
-        username: employeePayload.username,
-        password: encryptor.encrypt(employeePayload.password),
-        position: employeePayload.position,
-        department: employeePayload.department,
+        name: payload.name,
+        username: payload.username,
+        password: encryptor.encrypt(payload.password),
+        position: payload.position,
+        department: payload.department,
         isActive: false
     });
     return employee.save()
@@ -22,14 +22,14 @@ module.exports.createEmployee = (employeePayload) => {
         .catch(error => { throw new Error(error.message); });
 };
 
-module.exports.updateEmployee = (employeeId, employeePayload) => {
-    return employeeSchema.findByIdAndUpdate(employeeId, employeePayload)
+module.exports.updateEmployee = (id, payload) => {
+    return employeeSchema.findByIdAndUpdate(id, payload)
         .then(result => result)
         .catch(error => { throw new Error(error.message); });
 };
 
-module.exports.removeEmployee = (employeeId) => {
-    return employeeSchema.findByIdAndDelete(employeeId)
+module.exports.removeEmployee = (id) => {
+    return employeeSchema.findByIdAndDelete(id)
         .then(result => result)
         .catch(error => { throw new Error(error.message); });
 };
