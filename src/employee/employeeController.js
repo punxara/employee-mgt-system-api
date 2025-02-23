@@ -14,4 +14,13 @@ const createEmployee = async (request, response) => {
     }
 }
 
-module.exports = {getAllEmployees, createEmployee};
+const updateEmployee = async (request, response) => {
+    let employee = await employeeService.updateEmployee(request.params.id, request.body);
+    if (employee) {
+        response.send({"status": true, "data": employee, "message": 'Employee updated successfully.'})
+    } else {
+        response.send({"status": false, "data": null, "message": 'Employee updating failed.'})
+    }
+}
+
+module.exports = {getAllEmployees, createEmployee, updateEmployee};

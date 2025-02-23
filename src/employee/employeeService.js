@@ -21,3 +21,9 @@ module.exports.createEmployee = (employeePayload) => {
         .then(result => result)
         .catch(error => { throw new Error(error.message); });
 };
+
+module.exports.updateEmployee = (employeeId, employeePayload) => {
+    return employeeSchema.findByIdAndUpdate(employeeId, employeePayload)
+        .then(result => result)
+        .catch(error => { throw new Error(error.message); });
+};

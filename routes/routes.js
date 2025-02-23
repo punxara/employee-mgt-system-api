@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.route('/employee/getAll').get(employeeController.getAllEmployees);
 router.route('/employee/create').post(employeeController.createEmployee);
+router.route('/employee/update/:id').patch(employeeController.updateEmployee);
 
 module.exports = router;
