@@ -1,8 +1,6 @@
 const express = require('express');
 const server = express();
-
 server.use(express.json());
-
 server.listen(8000, function check(error){
     if (error){
         console.log(error)
@@ -12,7 +10,6 @@ server.listen(8000, function check(error){
 });
 
 const mongoose = require('mongoose');
-
 const connectDB = async () => {
     try {
         await mongoose.connect('mongodb://localhost:27017/mgt-sys-db');
@@ -22,3 +19,9 @@ const connectDB = async () => {
     }
 };
 connectDB();
+
+const routes = require('./routes/routes');
+server.use(routes);
+
+const cors = require('cors')
+server.use(cors())
