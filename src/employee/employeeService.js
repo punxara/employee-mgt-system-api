@@ -27,3 +27,9 @@ module.exports.updateEmployee = (employeeId, employeePayload) => {
         .then(result => result)
         .catch(error => { throw new Error(error.message); });
 };
+
+module.exports.removeEmployee = (employeeId) => {
+    return employeeSchema.findByIdAndDelete(employeeId)
+        .then(result => result)
+        .catch(error => { throw new Error(error.message); });
+};

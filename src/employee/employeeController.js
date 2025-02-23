@@ -23,4 +23,13 @@ const updateEmployee = async (request, response) => {
     }
 }
 
-module.exports = {getAllEmployees, createEmployee, updateEmployee};
+const removeEmployee = async (request, response) => {
+    let employee = await employeeService.removeEmployee(request.params.id);
+    if (employee) {
+        response.send({"status": true, "data": employee, "message": 'Employee removed successfully.'})
+    } else {
+        response.send({"status": false, "data": null, "message": 'Employee removing failed.'})
+    }
+}
+
+module.exports = {getAllEmployees, createEmployee, updateEmployee, removeEmployee};
