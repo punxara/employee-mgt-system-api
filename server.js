@@ -1,6 +1,9 @@
-// --------------------------------------------------EXPRESS----------------------------------------------------------
 const express = require('express');
 const server = express();
+
+const cors = require('cors');
+server.use(cors());
+
 server.use(express.json());
 server.listen(8000, function check(error){
     if (error){
@@ -25,10 +28,6 @@ connectDB();
 // --------------------------------------------------ROUTES----------------------------------------------------------
 const routes = require('./routes/routes');
 server.use(routes);
-
-// --------------------------------------------------CORS----------------------------------------------------------
-const cors = require('cors')
-server.use(cors());
 
 // --------------------------------------------------SWAGGER----------------------------------------------------------
 const swaggerUi = require('swagger-ui-express');
