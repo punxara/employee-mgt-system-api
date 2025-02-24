@@ -33,7 +33,7 @@ const router = express.Router();
  *                   imageUrl:
  *                     type: string
  */
-router.route('/employee/getAll').get(employeeController.getAllEmployees);
+router.route('/employee/getAll').post(employeeController.getAllEmployees);
 
 /**
  * @swagger
