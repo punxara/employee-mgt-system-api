@@ -43,7 +43,10 @@ module.exports.createEmployee = async (payload) => {
         // to save activity log record
         const activityLogDetails = {
             action: 'create',
-            details: savedEmployee,
+            empName: savedEmployee.name,
+            empUsername: savedEmployee.username,
+            empDepartment: savedEmployee.departmentName,
+            empPosition: savedEmployee.position,
             date: new Date()
         };
         await activityLogService.createActivityLog(activityLogDetails);
@@ -67,7 +70,10 @@ module.exports.updateEmployee = async (id, payload) => {
         // to save activity log record
         const activityLogDetails = {
             action: 'update',
-            details: updatedEmployee,
+            empName: updatedEmployee.name,
+            empUsername: updatedEmployee.username,
+            empDepartment: updatedEmployee.departmentName,
+            empPosition: updatedEmployee.position,
             date: new Date()
         };
         await activityLogService.createActivityLog(activityLogDetails);
@@ -91,7 +97,10 @@ module.exports.removeEmployee = async (id) => {
         // to save activity log record
         const activityLogDetails = {
             action: 'delete',
-            details: deletedEmployee,
+            empName: deletedEmployee.name,
+            empUsername: deletedEmployee.username,
+            empDepartment: deletedEmployee.departmentName,
+            empPosition: deletedEmployee.position,
             date: new Date()
         };
         await activityLogService.createActivityLog(activityLogDetails);

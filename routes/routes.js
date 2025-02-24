@@ -2,6 +2,7 @@ const express = require('express');
 const employeeController = require('../src/employee/employeeController');
 const departmentController = require('../src/department/departmentController');
 const authController = require('../src/auth/authController');
+const activityLogController = require('../src/activity-log/activityLogController');
 const router = express.Router();
 
 /**
@@ -170,5 +171,7 @@ router.route('/department/update/:id').patch(departmentController.updateDepartme
 router.route('/department/remove/:id').delete(departmentController.removeDepartment);
 
 router.route('/auth').post(authController.authenticateUser);
+
+router.route('/activity-log/getAll').get(activityLogController.getAllActivityLogs);
 
 module.exports = router;

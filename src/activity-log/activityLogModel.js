@@ -7,10 +7,21 @@ const activityLogSchema = new Schema({
         enum: ['create', 'update', 'delete'],
         required: true
     },
-    details: {
-        type: Schema.Types.ObjectId,
-        ref: 'Employee',
-        required: false
+    empName: {
+        type: String,
+        required: true
+    },
+    empUsername: {
+        type: String,
+        required: true
+    },
+    empDepartment: {
+        type: String,
+        required: true
+    },
+    empPosition: {
+        type: String,
+        required: true
     },
     date: {
         type: Date,
