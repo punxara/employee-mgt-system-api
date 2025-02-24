@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 module.exports.getAllEmployees = () => {
     return employeeSchema.find({}).populate('department')
         .then(result => result)
-        .catch(error => { throw new Error(error.message); });
+        .catch(error => {
+            throw new Error(error.message);
+        });
 };
 
 module.exports.createEmployee = async (payload) => {
@@ -26,15 +28,18 @@ module.exports.createEmployee = async (payload) => {
     }
 };
 
-
 module.exports.updateEmployee = (id, payload) => {
     return employeeSchema.findByIdAndUpdate(id, payload, {new: true}).populate('department')
         .then(result => result)
-        .catch(error => { throw new Error(error.message); });
+        .catch(error => {
+            throw new Error(error.message);
+        });
 };
 
 module.exports.removeEmployee = (id) => {
     return employeeSchema.findByIdAndDelete(id)
         .then(result => result)
-        .catch(error => { throw new Error(error.message); });
+        .catch(error => {
+            throw new Error(error.message);
+        });
 };

@@ -7,7 +7,7 @@ module.exports.authenticateUser = async (payload) => {
     if (isValid) {
         return employee;
     } else {
-        console.log('Invalid password for username : '+employee.username)
+        console.log('Invalid password for username : ' + employee.username)
         return null;
     }
 };
