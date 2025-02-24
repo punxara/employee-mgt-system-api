@@ -19,10 +19,14 @@ const employeeSchema = new Schema({
         type: String,
         required: true
     },
+    departmentName: {
+        type: String,
+        required: false
+    },
     department: {
         type: Schema.Types.ObjectId,
         ref: 'Department',
-        required: true
+        required: false
     },
     isActive: {
         type: Boolean,
@@ -34,15 +38,4 @@ const employeeSchema = new Schema({
     }
 })
 
-
 module.exports = mongoose.model('Employee', employeeSchema)
-
-// employeeSchema.statics.authenticateUser = async (payload) => {
-//     const employee = await mongoose.model('Employee', employeeSchema).findOne(payload.name);
-//     const isValid = await bcrypt.compare(payload.password, employee.password);
-//     if (isValid){
-//         return employee;
-//     } else {
-//         throw new Error('Invalid password.');
-//     }
-// }

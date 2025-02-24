@@ -1,7 +1,7 @@
 const employeeService = require('./employeeService');
 
 const getAllEmployees = async (request, response) => {
-    let employee = await employeeService.getAllEmployees();
+    let employee = await employeeService.getAllEmployees(request.body);
     response.send({"status": true, "data": employee})
 }
 

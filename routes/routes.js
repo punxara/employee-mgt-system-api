@@ -13,7 +13,9 @@ const router = express.Router();
  *       200:
  *         description: A list of employees
  */
-router.route('/employee/getAll').get(employeeController.getAllEmployees);
+// router.route('/employee/getAll').get(employeeController.getAllEmployees);
+
+router.route('/employee/getAll').post(employeeController.getAllEmployees);
 
 /**
  * @swagger

@@ -1,13 +1,30 @@
 const employeeSchema = require('./employeeModel');
 const bcrypt = require('bcrypt');
 
-module.exports.getAllEmployees = () => {
-    return employeeSchema.find({}).populate('department')
+// module.exports.getAllEmployees = () => {
+//     return employeeSchema.find({}).populate('department')
+//         .then(result => result)
+//         .catch(error => {
+//             throw new Error(error.message);
+//         });
+// };
+
+module.exports.getAllEmployees = (payload) => {
+    const filters = {};
+    payload.forEach(item => {
+        for (const key in item) {
+            if (item[key]) {
+                filters[key] = { $regex: item[key], $options: 'i' };
+            }
+        }
+    });
+    return employeeSchema.find(filters).populate('department')
         .then(result => result)
         .catch(error => {
             throw new Error(error.message);
         });
 };
+
 
 module.exports.createEmployee = async (payload) => {
     try {
@@ -17,6 +34,7 @@ module.exports.createEmployee = async (payload) => {
             password: await bcrypt.hash(payload.password, 10),
             position: payload.position,
             department: payload.department,
+            departmentName: payload.department.name,
             isActive: false,
             imageUrl: payload.imageUrl
         });
