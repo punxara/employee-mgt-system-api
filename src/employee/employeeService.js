@@ -55,15 +55,17 @@ module.exports.updateEmployee = async (id, payload) => {
     try {
         const updatedEmployee = await employeeSchema.findByIdAndUpdate(id, payload, {new: true}).populate('department');
         // to save activity log record
-        const activityLogDetails = {
-            action: 'update',
-            empName: updatedEmployee.name,
-            empUsername: updatedEmployee.username,
-            empDepartment: updatedEmployee.departmentName,
-            empPosition: updatedEmployee.position,
-            date: new Date()
-        };
-        await activityLogService.createActivityLog(activityLogDetails);
+        if (updatedEmployee) {
+            const activityLogDetails = {
+                action: 'update',
+                empName: updatedEmployee.name,
+                empUsername: updatedEmployee.username,
+                empDepartment: updatedEmployee.departmentName,
+                empPosition: updatedEmployee.position,
+                date: new Date()
+            };
+            await activityLogService.createActivityLog(activityLogDetails);
+        }
         return updatedEmployee;
     } catch (error) {
         throw new Error(error.message);
