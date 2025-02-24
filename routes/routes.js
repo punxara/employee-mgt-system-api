@@ -169,10 +169,86 @@ router.route('/department/update/:id').patch(departmentController.updateDepartme
  */
 router.route('/department/remove/:id').delete(departmentController.removeDepartment);
 
+/**
+ * @swagger
+ * /activity-log/getAll:
+ *   get:
+ *     summary: Retrieve all activity logs
+ *     responses:
+ *       200:
+ *         description: A list of activity logs
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   action:
+ *                     type: string
+ *                   timestamp:
+ *                     type: string
+ *                   user:
+ *                     type: string
+ */
 router.route('/activity-log/getAll').get(activityLogController.getAllActivityLogs);
 
+/**
+ * @swagger
+ * /auth:
+ *   post:
+ *     summary: Authenticate login employee
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Authentication successful
+ *       401:
+ *         description: Invalid credentials
+ */
 router.route('/auth').post(authController.authenticateUser);
 
+/**
+ * @swagger
+ * /employee/upload/{id}:
+ *   post:
+ *     summary: Upload employee image by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Employee ID
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Image uploaded successfully
+ *       400:
+ *         description: Bad request (e.g., invalid file format)
+ *       404:
+ *         description: Employee not found
+ */
 router.route('/employee/upload/:id').post(employeeController.uploadEmployeeImage);
 
 module.exports = router;
