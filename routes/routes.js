@@ -13,8 +13,27 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: A list of employees
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                   username:
+ *                     type: string
+ *                   position:
+ *                     type: string
+ *                   departmentName:
+ *                     type: string
+ *                   isActive:
+ *                     type: boolean
+ *                   imageUrl:
+ *                     type: string
  */
-router.route('/employee/getAll').post(employeeController.getAllEmployees);
+router.route('/employee/getAll').get(employeeController.getAllEmployees);
 
 /**
  * @swagger
@@ -30,9 +49,19 @@ router.route('/employee/getAll').post(employeeController.getAllEmployees);
  *             properties:
  *               name:
  *                 type: string
- *               age:
- *                 type: integer
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               position:
+ *                 type: string
+ *               departmentName:
+ *                 type: string
  *               departmentId:
+ *                 type: string
+ *               isActive:
+ *                 type: boolean
+ *               imageUrl:
  *                 type: string
  *     responses:
  *       201:
@@ -61,9 +90,19 @@ router.route('/employee/create').post(employeeController.createEmployee);
  *             properties:
  *               name:
  *                 type: string
- *               age:
- *                 type: integer
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               position:
+ *                 type: string
+ *               departmentName:
+ *                 type: string
  *               departmentId:
+ *                 type: string
+ *               isActive:
+ *                 type: boolean
+ *               imageUrl:
  *                 type: string
  *     responses:
  *       200:
@@ -97,6 +136,17 @@ router.route('/employee/remove/:id').delete(employeeController.removeEmployee);
  *     responses:
  *       200:
  *         description: A list of departments
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                   description:
+ *                     type: string
  */
 router.route('/department/getAll').get(departmentController.getAllDepartments);
 
@@ -114,7 +164,7 @@ router.route('/department/getAll').get(departmentController.getAllDepartments);
  *             properties:
  *               name:
  *                 type: string
- *               location:
+ *               description:
  *                 type: string
  *     responses:
  *       201:
@@ -143,7 +193,7 @@ router.route('/department/create').post(departmentController.createDepartment);
  *             properties:
  *               name:
  *                 type: string
- *               location:
+ *               description:
  *                 type: string
  *     responses:
  *       200:
@@ -188,10 +238,17 @@ router.route('/department/remove/:id').delete(departmentController.removeDepartm
  *                     type: string
  *                   action:
  *                     type: string
- *                   timestamp:
+ *                   empName:
  *                     type: string
- *                   user:
+ *                   empUsername:
  *                     type: string
+ *                   empDepartment:
+ *                     type: string
+ *                   empPosition:
+ *                     type: string
+ *                   date:
+ *                     type: string
+ *                     format: date-time
  */
 router.route('/activity-log/getAll').get(activityLogController.getAllActivityLogs);
 

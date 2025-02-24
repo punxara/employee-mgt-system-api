@@ -46,7 +46,7 @@ const swaggerOptions = {
             },
         ],
     },
-    apis: ['./routes/routes.js'], // Path to the API routes
+    apis: ['./routes/routes.js'],
 };
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 server.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
