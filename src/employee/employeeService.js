@@ -1,21 +1,16 @@
 const employeeSchema = require('./employeeModel');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
 const activityLogService = require('../activity-log/activityLogService');
-
-// module.exports.getAllEmployees = () => {
-//     return employeeSchema.find({}).populate('department')
-//         .then(result => result)
-//         .catch(error => {
-//             throw new Error(error.message);
-//         });
-// };
+const {join} = require("node:path");
+const {existsSync, mkdirSync} = require("node:fs");
 
 module.exports.getAllEmployees = (payload) => {
     const filters = {};
     payload.forEach(item => {
         for (const key in item) {
             if (item[key]) {
-                filters[key] = { $regex: item[key], $options: 'i' };
+                filters[key] = {$regex: item[key], $options: 'i'};
             }
         }
     });
@@ -56,17 +51,9 @@ module.exports.createEmployee = async (payload) => {
     }
 };
 
-// module.exports.updateEmployee = (id, payload) => {
-//     return employeeSchema.findByIdAndUpdate(id, payload, {new: true}).populate('department')
-//         .then(result => result)
-//         .catch(error => {
-//             throw new Error(error.message);
-//         });
-// };
-
 module.exports.updateEmployee = async (id, payload) => {
     try {
-        const updatedEmployee = await employeeSchema.findByIdAndUpdate(id, payload, { new: true }).populate('department');
+        const updatedEmployee = await employeeSchema.findByIdAndUpdate(id, payload, {new: true}).populate('department');
         // to save activity log record
         const activityLogDetails = {
             action: 'update',
@@ -82,14 +69,6 @@ module.exports.updateEmployee = async (id, payload) => {
         throw new Error(error.message);
     }
 };
-
-// module.exports.removeEmployee = (id) => {
-//     return employeeSchema.findByIdAndDelete(id)
-//         .then(result => result)
-//         .catch(error => {
-//             throw new Error(error.message);
-//         });
-// };
 
 module.exports.removeEmployee = async (id) => {
     try {
@@ -108,4 +87,34 @@ module.exports.removeEmployee = async (id) => {
     } catch (error) {
         throw new Error(error.message);
     }
+};
+
+// to upload and save image
+const uploadDir = join(__dirname, '../assets/uploads');
+if (!existsSync(uploadDir)) {
+    mkdirSync(uploadDir, {recursive: true});
+}
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    },
+});
+const upload = multer({storage}).single('image');
+module.exports.uploadEmployeeImage = (req, res) => {
+    return new Promise((resolve, reject) => {
+        upload(req, res, async (error) => {
+            if (error) {
+                return reject(new Error(error.message));
+            }
+            if (!req.file) {
+                return reject(new Error('No file uploaded'));
+            }
+            const fileUrl = `/assets/uploads/${req.file.filename}`;
+            const updatedEmployee = await employeeSchema.findByIdAndUpdate(req.params.id, {imageUrl : fileUrl}, {new: true}).populate('department');
+            resolve(updatedEmployee);
+        });
+    });
 };

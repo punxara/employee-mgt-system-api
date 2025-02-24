@@ -32,4 +32,13 @@ const removeEmployee = async (request, response) => {
     }
 }
 
-module.exports = {getAllEmployees, createEmployee, updateEmployee, removeEmployee};
+const uploadEmployeeImage = async (request, response) => {
+    let employeeImageUrl = await employeeService.uploadEmployeeImage(request, response);
+    if (employeeImageUrl){
+        response.send({"status": true, "data": employeeImageUrl, "message": 'Employee image uploaded successfully.'});
+    } else {
+        response.send({"status": false, "data": null, "message": 'Employee image uploading failed.'});
+    }
+};
+
+module.exports = {getAllEmployees, createEmployee, updateEmployee, removeEmployee, uploadEmployeeImage};

@@ -14,7 +14,6 @@ const router = express.Router();
  *       200:
  *         description: A list of employees
  */
-// router.route('/employee/getAll').get(employeeController.getAllEmployees);
 router.route('/employee/getAll').post(employeeController.getAllEmployees);
 
 /**
@@ -170,8 +169,10 @@ router.route('/department/update/:id').patch(departmentController.updateDepartme
  */
 router.route('/department/remove/:id').delete(departmentController.removeDepartment);
 
+router.route('/activity-log/getAll').get(activityLogController.getAllActivityLogs);
+
 router.route('/auth').post(authController.authenticateUser);
 
-router.route('/activity-log/getAll').get(activityLogController.getAllActivityLogs);
+router.route('/employee/upload/:id').post(employeeController.uploadEmployeeImage);
 
 module.exports = router;
